@@ -11,7 +11,7 @@ class VerifyController extends Controller
     public function verify(EmailVerificationRequest $request)
     {
 
-        if ($request->user()->hasVerifiedEmai()) {
+        if ($request->user()->hasVerifiedEmail()) {
             return response()->json(['message' => 'El usuario ya ha sido confirmado'], 400);
         }
 
@@ -19,7 +19,7 @@ class VerifyController extends Controller
             event(new Verified($request->user()));
         }
 
-        return response()->json(['message' => 'El correo se ha enviado correctamente']);
+        return response()->json(['message' => 'El correo se ha verificado correctamente']);
     }
 
     public function resend(Request $request)
