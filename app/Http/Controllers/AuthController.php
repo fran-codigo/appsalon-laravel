@@ -18,6 +18,8 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
 
+        $user->sendEmailVerificationNotification();
+
         return [
             'token' => $user->createToken('token')->plainTextToken,
             'user' => $user
