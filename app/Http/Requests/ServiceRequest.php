@@ -23,7 +23,8 @@ class ServiceRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'price' => ['required', 'numeric']
+            'price' => ['required', 'numeric'],
+            'available' => ['boolean']
         ];
     }
 

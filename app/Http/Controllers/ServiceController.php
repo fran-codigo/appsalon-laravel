@@ -53,14 +53,6 @@ class ServiceController extends Controller
         ];
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id) {}
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(ServiceRequest $request, string $id)
     {
         $data = $request->validated();
@@ -75,6 +67,7 @@ class ServiceController extends Controller
 
         $service->name = $data['name'];
         $service->price = $data['price'];
+        $service->available = $data['available'];
         $service->save();
 
         return [
