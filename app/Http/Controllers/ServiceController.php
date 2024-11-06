@@ -88,7 +88,8 @@ class ServiceController extends Controller
             ], 404);
         }
 
-        $service->delete();
+        $service->available = 0;
+        $service->save();
 
         return [
             'message' => 'El servicio se ha eliminado correctamente'
