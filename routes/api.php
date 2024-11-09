@@ -21,4 +21,4 @@ Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth
 
 Route::resource('services', ServiceController::class);
 
-Route::apiResource('appointments', AppointmentController::class);
+Route::apiResource('appointments', AppointmentController::class)->middleware('auth:sanctum');
