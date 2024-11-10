@@ -8,8 +8,16 @@ const router = createRouter({
     routes: [
         { path: "/", component: HomeView },
         {
-            path: "/login",
-            component: () => import("../views/auth/LoginView.vue"),
+            path: "/auth",
+            name: "auth",
+            component: () => import("../views/auth/AuthLayout.vue"),
+            children: [
+                {
+                    path: "login",
+                    name: "login",
+                    component: () => import("../views/auth/LoginView.vue"),
+                },
+            ],
         },
         { path: "/:pathMatch(.*)*", component: NotFoundView },
     ],

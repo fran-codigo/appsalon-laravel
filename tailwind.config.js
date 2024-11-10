@@ -4,6 +4,7 @@ export default {
         "./resources/**/*.vue",
         "./resources/**/*.js",
         "resources/**/*.blade.php",
+        "./formkit.config.js"
     ],
     theme: {
         extend: {},
