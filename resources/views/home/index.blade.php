@@ -11,6 +11,7 @@
 </head>
 
 <body>
+  @routes
   <div id="app">
   </div>
 </body>
