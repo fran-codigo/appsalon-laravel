@@ -3,16 +3,17 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 
 const authRoutes = [
-    // { name: "register", text: "Crear Cuenta" },
+    { name: "register", text: "Crear Cuenta" },
     // { name: "forgot-password", text: "Olvide mi contraseña" },
     { name: "login", text: "Iniciar Sesión" },
 ];
 </script>
 
 <template>
-    <div class="container mx-auto mt-20 md:h-2/3 lg:w-2/5">
+    <div class="container mx-auto mt-20 px-5 md:h-2/3 lg:w-2/5">
+        <RouterView />
         <nav
-            class="mt-10 flex flex-col items-center space-y-5 lg:flex-row lg:justify-between lg:space-y-0"
+            class="my-10 flex flex-col items-center space-y-5 lg:flex-row lg:justify-between lg:space-y-0"
         >
             <RouterLink
                 v-for="authRoute in authRoutes"
@@ -22,6 +23,5 @@ const authRoutes = [
                 >{{ authRoute.text }}</RouterLink
             >
         </nav>
-        <RouterView />
     </div>
 </template>

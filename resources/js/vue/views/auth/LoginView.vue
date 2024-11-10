@@ -1,7 +1,8 @@
 <script setup></script>
 
 <template>
-    <h1 class="text-6xl font-extrabold text-center mt-10">Iniciar Sesión</h1>
+    <p class="text-blue-600 text-center text-xl">App Salón</p>
+    <h1 class="text-5xl font-extrabold text-center mt-10">Iniciar Sesión</h1>
     <p class="text-2xl text-center my-5">Si tienes una cuenta, Inicia sesión</p>
 
     <FormKit
