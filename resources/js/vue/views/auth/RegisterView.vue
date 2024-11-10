@@ -1,4 +1,17 @@
-<script setup></script>
+<script setup>
+import AuthAPI from "../../api/AuthAPI";
+
+const handleSubmit = async ({ password_confirm, ...formData }) => {
+    const formDataNew = {
+        ...formData,
+        password_confirmation: password_confirm,
+    };
+    try {
+        const { data } = await AuthAPI.register(formDataNew);
+        console.log(data);
+    } catch (error) {}
+};
+</script>
 
 <template>
     <p class="text-blue-600 text-center text-xl">App Salón</p>
@@ -9,8 +22,10 @@
 
     <FormKit
         type="form"
+        id="registerForm"
         :actions="false"
         incomplete-message="Revisa que todos los datos sean correctos"
+        @submit="handleSubmit"
     >
         <FormKit
             type="text"

@@ -15,9 +15,9 @@ Route::get('/user', function (Request $request) {
 Route::get('email/verify/{id}/{hash}', [VerifyController::class, 'verify'])->middleware(['auth:sanctum', 'signed'])->name('verification.verify');
 Route::get('email/resend', [VerifyController::class, 'resend'])->middleware('auth:sanctum')->name('verification.resend');
 
-Route::post('/auth/register', [AuthController::class, 'register']);
-Route::post('/auth/login', [AuthController::class, 'login']);
-Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/auth/register', [AuthController::class, 'register'])->name('register.user');
+Route::post('/auth/login', [AuthController::class, 'login'])->name('login.user');
+Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout.user');
 
 Route::resource('services', ServiceController::class);
 
