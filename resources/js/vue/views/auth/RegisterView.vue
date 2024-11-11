@@ -1,11 +1,13 @@
 <script setup>
-import { inject } from "vue";
+import { inject, ref } from "vue";
 import { reset } from "@formkit/vue";
 import AuthAPI from "../../api/AuthAPI";
 
 const toast = inject("toast");
+const loading = ref(false);
 
 const handleSubmit = async ({ password_confirm, ...formData }) => {
+    loading.value = true;
     const formDataNew = {
         ...formData,
         password_confirmation: password_confirm,
@@ -25,6 +27,8 @@ const handleSubmit = async ({ password_confirm, ...formData }) => {
             message: error.response.data.message,
             type: "error",
         });
+    } finally {
+        loading.value = false;
     }
 };
 </script>
@@ -90,7 +94,15 @@ const handleSubmit = async ({ password_confirm, ...formData }) => {
             }"
         />
 
-        <FormKit type="submit">Crear Cuenta</FormKit>
+        <FormKit
+            type="submit"
+            :disabled="loading"
+            :classes="{
+                submit: true,
+                submitLoading: loading,
+            }"
+            >{{ loading ? "Cargando..." : "Crear Cuenta" }}</FormKit
+        >
     </FormKit>
 </template>
 
