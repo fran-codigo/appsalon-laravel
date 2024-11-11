@@ -1,5 +1,9 @@
 <script setup>
+import { inject } from "vue";
+import { reset } from "@formkit/vue";
 import AuthAPI from "../../api/AuthAPI";
+
+const toast = inject("toast");
 
 const handleSubmit = async ({ password_confirm, ...formData }) => {
     const formDataNew = {
@@ -8,8 +12,20 @@ const handleSubmit = async ({ password_confirm, ...formData }) => {
     };
     try {
         const { data } = await AuthAPI.register(formDataNew);
-        console.log(data);
-    } catch (error) {}
+        toast.open({
+            message: data.message,
+            type: "success",
+        });
+
+        reset("registerForm");
+    } catch (error) {
+        console.log(error);
+
+        toast.open({
+            message: error.response.data.message,
+            type: "error",
+        });
+    }
 };
 </script>
 
