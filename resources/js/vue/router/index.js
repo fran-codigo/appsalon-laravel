@@ -24,6 +24,20 @@ const router = createRouter({
                 },
             ],
         },
+        {
+            path: "/reservaciones",
+            name: "appointments",
+            component: () =>
+                import("../views/appointments/AppointmentsLayout.vue"),
+            children: [
+                {
+                    path: "",
+                    name: "my-appointments",
+                    component: () =>
+                        import("../views/appointments/AppointmentsView.vue"),
+                },
+            ],
+        },
         { path: "/:pathMatch(.*)*", component: NotFoundView },
     ],
 });

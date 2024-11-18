@@ -4,4 +4,7 @@ export default {
     register(data) {
         return api.post(route('register.user'), data);
     },
+    login(data) {
+        return api.post(route('login.user'), data)
+    }
 };

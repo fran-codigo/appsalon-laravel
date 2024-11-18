@@ -14,7 +14,7 @@
     <p>Hola {{ $name }}, has creado una cuenta en App Salón a countinuación presiona el siguiente enlace para
         verificar tu cuenta y puedas empezar a usar la aplicación </p>
 
-    <a href="{{ url('verify', $token) }}">Verificar Cuenta</a>
+    <a href="{{ route('verify.user', $token) }}">Verificar Cuenta</a>
 
 </body>
 
