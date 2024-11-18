@@ -7,6 +7,8 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -14,13 +16,19 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
+        $token = Str::random(32);
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'token' => $token
         ]);
 
-        $user->sendEmailVerificationNotification();
+        Mail::send('mail.emailVerify', ['token' => $token, 'name' => $request->get('name')], function ($message) use ($request) {
+            $message->to($request->email);
+            $message->subject('Verificacion de email');
+        });
 
         return [
             'token' => $user->createToken('token')->plainTextToken,
@@ -40,10 +48,10 @@ class AuthController extends Controller
 
         $user = Auth::user();
 
-        if (!$user->hasVerifiedEmail()) {
+        if (!$user->is_verified) {
             return response()->json([
-                'message' => 'Confirma tu cuenta antes de hacer login'
-            ]);
+                'errors' => ['Confirma tu cuenta antes de hacer login']
+            ], 422);
         }
 
         return [
@@ -58,5 +66,24 @@ class AuthController extends Controller
         $user->currentAccessToken()->delete();
 
         return ['user' => null];
+    }
+
+    public function verifyUser(Request $request)
+    {
+        $user = User::where('token', $request->token)->first();
+
+        if (!$user) {
+            return response()->json([
+                'error' => 'Token inválido'
+            ], 400);
+        }
+
+        $user->is_verified = true;
+        $user->token = null;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Tu cuenta ha sido verificada'
+        ]);
     }
 }
