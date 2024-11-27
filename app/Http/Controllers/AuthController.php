@@ -74,7 +74,7 @@ class AuthController extends Controller
 
         if (!$user) {
             return response()->json([
-                'error' => 'Token inválido'
+                'errors' => 'Token inválido'
             ], 400);
         }
 
