@@ -22,6 +22,11 @@ const router = createRouter({
                     name: "login",
                     component: () => import("../views/auth/LoginView.vue"),
                 },
+                {
+                    path: "confirmar-cuenta/:token",
+                    name: "confirm-account",
+                    component: () => import("../views/auth/ConfirmAccountView.vue"),
+                },
             ],
         },
         {
