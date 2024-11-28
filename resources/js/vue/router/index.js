@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "../views/HomeView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
+import AppointmentsLayout from "../views/appointments/AppointmentsLayout.vue";
+import { authGuard } from "./guards";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -25,7 +27,8 @@ const router = createRouter({
                 {
                     path: "confirmar-cuenta/:token",
                     name: "confirm-account",
-                    component: () => import("../views/auth/ConfirmAccountView.vue"),
+                    component: () =>
+                        import("../views/auth/ConfirmAccountView.vue"),
                 },
             ],
         },
@@ -34,6 +37,7 @@ const router = createRouter({
             name: "appointments",
             component: () =>
                 import("../views/appointments/AppointmentsLayout.vue"),
+            meta: { requiresAuth: true },
             children: [
                 {
                     path: "",
@@ -45,6 +49,10 @@ const router = createRouter({
         },
         { path: "/:pathMatch(.*)*", component: NotFoundView },
     ],
+});
+
+router.beforeEach((to, from, next) => {
+    authGuard(to, from, next);
 });
 
 export default router;

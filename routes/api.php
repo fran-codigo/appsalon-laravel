@@ -3,17 +3,16 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
 Route::post('/auth/register', [AuthController::class, 'register'])->name('register.user');
 Route::get('/auth/verify-account/{token}', [AuthController::class, 'verifyUser'])->name('verify.user');
 Route::post('/auth/login', [AuthController::class, 'login'])->name('login.user');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout.user');
+
+Route::get('/user', [UserController::class, 'index'])->middleware('auth:sanctum')->name('user.index');
 
 
 Route::resource('services', ServiceController::class);

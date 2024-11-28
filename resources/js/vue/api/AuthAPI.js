@@ -12,4 +12,7 @@ export default {
             params: { token },
         });
     },
+    auth() {
+        return api.get(route('user.index'))
+    },
 };
