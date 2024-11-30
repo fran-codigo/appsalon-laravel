@@ -45,6 +45,23 @@ const router = createRouter({
                     component: () =>
                         import("../views/appointments/AppointmentsView.vue"),
                 },
+                {
+                    path: "nueva",
+                    component: () =>
+                        import(
+                            "../views/appointments/NewAppointmentLayout.vue"
+                        ),
+                    children: [
+                        {
+                            path: "",
+                            name: "new-appointment",
+                            component: () =>
+                                import(
+                                    "../views/appointments/ServicesView.vue"
+                                ),
+                        },
+                    ],
+                },
             ],
         },
         { path: "/:pathMatch(.*)*", component: NotFoundView },
