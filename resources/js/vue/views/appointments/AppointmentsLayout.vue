@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-    <div class="container p-10">
+    <div class="p-10">
         <h1 class="text-2xl lg:text-5xl font-bold text-center">App Salón</h1>
 
         <div
