@@ -52,6 +52,8 @@ export const useAppointmentsStore = defineStore("appointments", () => {
         return (id) => services.value.some((service) => service.id === id);
     });
 
+    const noServiceSelected = computed(() => services.value.length === 0);
+
     return {
         services,
         date,
@@ -59,5 +61,6 @@ export const useAppointmentsStore = defineStore("appointments", () => {
         time,
         onServiceSelected,
         isServiceSelected,
+        noServiceSelected,
     };
 });
