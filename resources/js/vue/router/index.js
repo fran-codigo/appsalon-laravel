@@ -43,7 +43,7 @@ const router = createRouter({
                     path: "",
                     name: "my-appointments",
                     component: () =>
-                        import("../views/appointments/AppointmentsView.vue"),
+                        import("../views/appointments/MyAppointmentsView.vue"),
                 },
                 {
                     path: "nueva",
@@ -58,6 +58,14 @@ const router = createRouter({
                             component: () =>
                                 import(
                                     "../views/appointments/ServicesView.vue"
+                                ),
+                        },
+                        {
+                            path: "detalles",
+                            name: "appointment-details",
+                            component: () =>
+                                import(
+                                    "../views/appointments/AppointmentView.vue"
                                 ),
                         },
                     ],
