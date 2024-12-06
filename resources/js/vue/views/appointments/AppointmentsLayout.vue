@@ -1,4 +1,5 @@
 <script setup>
+import { RouterLink } from "vue-router";
 import { useUsersStore } from "../../store/users";
 
 const user = useUsersStore();
@@ -22,15 +23,15 @@ const user = useUsersStore();
             </div>
 
             <nav class="flex gap-5 items-center">
-                <a
-                    href=""
+                <RouterLink
+                    :to="{ name: 'my-appointments' }"
                     class="p-3 uppercase text-xs font-black rounded-lg hover:underline"
-                    >Mis Citas</a
+                    >Mis Citas</RouterLink
                 >
-                <a
-                    href=""
+                <RouterLink
+                    :to="{ name: 'new-appointment' }"
                     class="p-3 text-gray-200 uppercase text-xs font-black rounded-lg bg-blue-700"
-                    >Nueva Cita</a
+                    >Nueva Cita</RouterLink
                 >
             </nav>
         </div>
