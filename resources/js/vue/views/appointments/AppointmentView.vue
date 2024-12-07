@@ -60,5 +60,13 @@ const appointment = useAppointmentsStore();
                 </button>
             </div>
         </div>
+
+        <div class="flex justify-end">
+            <button
+                class="w-full md:w-auto bg-blue-500 hover:bg-blue-800 p-3 rounded-lg font-black text-white"
+            >
+                Confirmar Reservación
+            </button>
+        </div>
     </div>
 </template>
