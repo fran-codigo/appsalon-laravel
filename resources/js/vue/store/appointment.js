@@ -12,7 +12,16 @@ export const useAppointmentsStore = defineStore("appointments", () => {
         const endHour = 18;
 
         for (let hour = startHour; hour <= endHour; hour++) {
-            hours.value.push(hour + ":00");
+            for (let minutes = 0; minutes < 60; minutes += 30) {
+                // Aumenta en intervalos de 30 minutos
+                const time = `${hour.toString().padStart(2, "0")}:${
+                    minutes === 0 ? "00" : "30"
+                }`;
+
+                if (hour === endHour && minutes > 0) break;
+
+                hours.value.push(time);
+            }
         }
     });
 

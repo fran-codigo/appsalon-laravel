@@ -50,7 +50,7 @@ const appointment = useAppointmentsStore();
             </div>
 
             <div
-                class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5 lg:mt:0"
+                class="flex-1 grid grid-cols-2 lg:grid-cols-3 gap-5 mt-5 lg:mt:0"
             >
                 <button
                     v-for="hour in appointment.hours"
