@@ -70,6 +70,10 @@ export const useAppointmentsStore = defineStore("appointments", () => {
         );
     });
 
+    const isValidReservation = computed(() => {
+        return services.value.length && date.value.length && time.value.length;
+    });
+
     return {
         services,
         date,
@@ -79,5 +83,6 @@ export const useAppointmentsStore = defineStore("appointments", () => {
         isServiceSelected,
         noServiceSelected,
         totalAmount,
+        isValidReservation,
     };
 });
