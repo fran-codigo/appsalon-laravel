@@ -9,20 +9,20 @@ const route = useRoute();
         <nav class="my-5 flex flex-col md:flex-row gap-3">
             <RouterLink
                 :to="{ name: 'new-appointment' }"
-                class="flex-1 text-center p-3 font-extrabold hover:bg-blue-600 hover:text-white"
+                class="flex-1 text-center p-3 font-extrabold hover:bg-blue-600 hover:text-white border border-gray-200"
                 :class="
                     route.name === 'new-appointment'
-                        ? 'bg-blue-500 text-white'
+                        ? 'bg-blue-600 text-white'
                         : 'bg-white text-blue-500'
                 "
                 >Servicios
             </RouterLink>
             <RouterLink
                 :to="{ name: 'appointment-details' }"
-                class="flex-1 text-center p-3 font-extrabold hover:bg-blue-600 hover:text-white"
+                class="flex-1 text-center p-3 font-extrabold hover:bg-blue-600 hover:text-white border border-gray-200"
                 :class="
                     route.name === 'appointment-details'
-                        ? 'bg-blue-500 text-white'
+                        ? 'bg-blue-600 text-white'
                         : 'bg-white text-blue-500'
                 "
                 >Cita y resumen
