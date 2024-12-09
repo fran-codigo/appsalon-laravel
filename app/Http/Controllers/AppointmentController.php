@@ -64,21 +64,21 @@ class AppointmentController extends Controller
         // Formatear fecha
         $date = $request->query('date');
 
-        $newDate = Carbon::parse($date);
+        $newDate = Carbon::createFromFormat('d/m/Y', $date)->format('Y-m-d');
 
-        if (!$newDate->isValid()) {
+        if (!$newDate) {
             return response()->json([
                 'errors' => 'Ha ocurrido un error, intente más tarde'
             ], 400);
         }
 
-        $dateISO = $newDate->toDateString();
+        // $dateISO = $newDate->toDateString();
 
-        $appointments = Appointment::where('date', $dateISO)->select('time')->get();
+        $appointments = Appointment::where('date', $newDate)->select('time')->get();
 
-        return response()->json([
+        return [
             'data' => $appointments
-        ]);
+        ];
     }
 
     /**
