@@ -18,3 +18,5 @@ Route::get('/user', [UserController::class, 'index'])->middleware('auth:sanctum'
 Route::resource('services', ServiceController::class);
 
 Route::apiResource('appointments', AppointmentController::class)->middleware('auth:sanctum');
+
+Route::get('appointments-date', [AppointmentController::class, 'appointmentsByDate'])->middleware('auth:sanctum')->name('appointments.date');

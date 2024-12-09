@@ -59,6 +59,28 @@ class AppointmentController extends Controller
         //
     }
 
+    public function appointmentsByDate(Request $request)
+    {
+        // Formatear fecha
+        $date = $request->query('date');
+
+        $newDate = Carbon::parse($date);
+
+        if (!$newDate->isValid()) {
+            return response()->json([
+                'errors' => 'Ha ocurrido un error, intente más tarde'
+            ], 400);
+        }
+
+        $dateISO = $newDate->toDateString();
+
+        $appointments = Appointment::where('date', $dateISO)->select('time')->get();
+
+        return response()->json([
+            'data' => $appointments
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      */
