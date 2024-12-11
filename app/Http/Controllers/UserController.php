@@ -20,7 +20,7 @@ class UserController extends Controller
 
         $appointments = Appointment::where('user_id', $user->id)
             ->where('date', '>=', Carbon::now()->toDateString())
-            ->select('id', 'date', 'total')
+            ->select('id', 'date', 'total', 'time')
             ->with('services')
             ->orderBy('date', 'ASC')
             ->get();

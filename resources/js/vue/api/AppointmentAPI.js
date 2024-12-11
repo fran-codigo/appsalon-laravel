@@ -24,4 +24,11 @@ export default {
             }
         );
     },
+    getUserAppointments() {
+        return api.get(route("user.appointments"), {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+    },
 };
