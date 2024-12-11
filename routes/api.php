@@ -13,6 +13,7 @@ Route::post('/auth/login', [AuthController::class, 'login'])->name('login.user')
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout.user');
 
 Route::get('/user', [UserController::class, 'index'])->middleware('auth:sanctum')->name('user.index');
+Route::get('/appointments-user', [UserController::class, 'getAppointments'])->middleware('auth:sanctum')->name('user.appointments');
 
 
 Route::resource('services', ServiceController::class);
