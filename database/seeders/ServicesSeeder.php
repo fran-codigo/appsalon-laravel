@@ -156,7 +156,6 @@ class ServicesSeeder extends Seeder
                 "updated_at" => Carbon::now(),
             ),
         ];
-
         DB::table('services')->insert($data);
     }
 }
