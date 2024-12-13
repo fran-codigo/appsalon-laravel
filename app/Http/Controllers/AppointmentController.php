@@ -96,6 +96,11 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        //
+        $appointment->state_id = AppointmentStatusEnum::CANCELED;
+        $appointment->save();
+
+        return [
+            'message' => 'La cita se ha cancelado correctamente'
+        ];
     }
 }
