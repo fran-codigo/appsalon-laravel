@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AppointmentStatusEnum;
 use App\Models\Appointment;
 use App\Models\AppointmentService;
 use Carbon\Carbon;
@@ -28,6 +29,7 @@ class AppointmentController extends Controller
         $appointment->date = $request->date;
         $appointment->time = $request->time;
         $appointment->total = $request->total;
+        $appointment->state_id = AppointmentStatusEnum::ACTIVE;
         $appointment->save();
 
         $id_appointment = $appointment->id;
@@ -40,7 +42,7 @@ class AppointmentController extends Controller
                 'appointment_id' => $id_appointment,
                 'service_id' => $service['id'],
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now(),
             ];
         }
 
