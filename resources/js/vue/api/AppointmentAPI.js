@@ -31,4 +31,16 @@ export default {
             },
         });
     },
+    cancelAppointment(id) {
+        return api.delete(
+            route("appointments.destroy", {
+                id,
+            }),
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+    },
 };
