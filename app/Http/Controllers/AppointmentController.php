@@ -58,7 +58,18 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        //
+        // Comprobar que la cita pertenece al usuario autenticado
+        if (Auth::user()->id !== $appointment->user_id) {
+            return response()->json([
+                'errors' => 'No tienes permiso para acceder a esta cita'
+            ], 403);
+        }
+
+        $appointment = Appointment::with('services')->find($appointment->id);
+
+        return [
+            'data' => $appointment
+        ];
     }
 
     public function appointmentsByDate(Request $request)
