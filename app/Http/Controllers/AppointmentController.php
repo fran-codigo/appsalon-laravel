@@ -87,7 +87,7 @@ class AppointmentController extends Controller
 
         // $dateISO = $newDate->toDateString();
 
-        $appointments = Appointment::where('date', $newDate)->select('time')->get();
+        $appointments = Appointment::where('date', $newDate)->select(['id', 'time'])->get();
 
         return [
             'data' => $appointments
@@ -99,7 +99,37 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, Appointment $appointment)
     {
-        //
+        // Comprobar que la cita pertenece al usuario autenticado
+        if (Auth::user()->id !== $appointment->user_id) {
+            return response()->json([
+                'errors' => 'No tienes permiso para acceder a esta cita'
+            ], 403);
+        }
+
+        $appointment->date = $request->date;
+        $appointment->time = $request->time;
+        $appointment->total = $request->total;
+        $appointment->save();
+
+        $services = $request->services;
+
+        AppointmentService::where('appointment_id', $appointment->id)->delete();
+
+        $appointment_service = [];
+        foreach ($services as $service) {
+            $appointment_service[] = [
+                'appointment_id' => $appointment->id,
+                'service_id' => $service['id'],
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ];
+        }
+
+        AppointmentService::insert($appointment_service);
+
+        return [
+            'message' => 'La cita se ha actualizado correctamente'
+        ];
     }
 
     /**

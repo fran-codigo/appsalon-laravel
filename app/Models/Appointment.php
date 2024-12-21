@@ -16,6 +16,7 @@ class Appointment extends Model
 
     public function services()
     {
-        return $this->belongsToMany(Service::class, 'appointments_services')->select('name', 'price');
+        return $this->belongsToMany(Service::class, 'appointments_services')
+            ->select(['services.id', 'services.name', 'services.price']);
     }
 }

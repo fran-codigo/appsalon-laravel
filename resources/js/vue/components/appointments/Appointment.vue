@@ -42,10 +42,13 @@ const appointmentStore = useAppointmentsStore();
         </div>
 
         <div class="flex gap-2">
-            <a
-                href=""
+            <RouterLink
+                :to="{
+                    name: 'edit-appointment',
+                    params: { id: appointment.id },
+                }"
                 class="bg-cyan-700 rounded-lg p-3 text-white text-sm uppercase font-black flex-1 md:flex-none"
-                >Editar cita</a
+                >Editar cita</RouterLink
             >
             <button
                 @click="appointmentStore.cancelAppointment(appointment.id)"

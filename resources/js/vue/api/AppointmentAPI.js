@@ -43,4 +43,29 @@ export default {
             }
         );
     },
+    getById(id) {
+        return api.get(
+            route("appointments.show", {
+                id,
+            }),
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+    },
+    update(id, data) {
+        return api.put(
+            route("appointments.update", {
+                id,
+            }),
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+    },
 };

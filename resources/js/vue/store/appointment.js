@@ -1,10 +1,12 @@
 import { computed, onMounted, ref, inject, watch } from "vue";
 import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
-import { convertToISO } from "../utils/date";
+import { convertToISO, convertToDDMMYYYY } from "../utils/date";
 import AppointmentAPI from "../api/AppointmentAPI";
+import { useUsersStore } from "./users";
 
 export const useAppointmentsStore = defineStore("appointments", () => {
+    const appointmentId = ref(null);
     const services = ref([]);
     const date = ref("");
     const hours = ref([]);
@@ -13,6 +15,7 @@ export const useAppointmentsStore = defineStore("appointments", () => {
 
     const toast = inject("toast");
     const router = useRouter();
+    const user = useUsersStore();
 
     onMounted(() => {
         const startHour = 9;
@@ -21,13 +24,13 @@ export const useAppointmentsStore = defineStore("appointments", () => {
         for (let hour = startHour; hour <= endHour; hour++) {
             for (let minutes = 0; minutes < 60; minutes += 30) {
                 // Aumenta en intervalos de 30 minutos
-                const time = `${hour.toString().padStart(2, "0")}:${
+                const timeHour = `${hour.toString().padStart(2, "0")}:${
                     minutes === 0 ? "00" : "30"
                 }`;
 
                 if (hour === endHour && minutes > 0) break;
 
-                hours.value.push(time);
+                hours.value.push(timeHour);
             }
         }
     });
@@ -38,13 +41,25 @@ export const useAppointmentsStore = defineStore("appointments", () => {
 
         const { data } = await AppointmentAPI.getByDate(date.value);
 
-        appointmentsByDate.value = data.data;
+        if (appointmentId.value) {
+            // Se habilita la hora de la cita a editar
+            appointmentsByDate.value = data.data.filter(
+                (appointment) => appointment.id != appointmentId.value
+            );
+
+            time.value = data.data.filter(
+                (appointment) => appointment.id === appointmentId.value
+            )[0].time;
+        } else {
+            appointmentsByDate.value = data.data;
+        }
     });
 
     function setSelectedAppointment(appointment) {
         services.value = appointment.services;
-
-        console.log(services);
+        date.value = convertToDDMMYYYY(appointment.date);
+        time.value = appointment.time;
+        appointmentId.value = appointment.id;
     }
 
     function onServiceSelected(service) {
@@ -65,7 +80,7 @@ export const useAppointmentsStore = defineStore("appointments", () => {
         }
     }
 
-    async function createAppointment() {
+    async function saveAppointment() {
         const appointment = {
             services: services.value,
             date: convertToISO(date.value),
@@ -73,20 +88,38 @@ export const useAppointmentsStore = defineStore("appointments", () => {
             total: totalAmount.value,
         };
 
-        try {
-            const { data } = await AppointmentAPI.create(appointment);
-            toast.open({
-                message: data.message,
-                type: "success",
-            });
-            clearAppointmentData();
-            router.push({ name: "my-appointments" });
-        } catch (error) {
-            console.log(error);
+        if (appointmentId.value) {
+            try {
+                const { data } = await AppointmentAPI.update(
+                    appointmentId.value,
+                    appointment
+                );
+                toast.open({
+                    message: data.message,
+                    type: "success",
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            try {
+                const { data } = await AppointmentAPI.create(appointment);
+                toast.open({
+                    message: data.message,
+                    type: "success",
+                });
+            } catch (error) {
+                console.log(error);
+            }
         }
+
+        clearAppointmentData();
+        user.getUserAppointments();
+        router.push({ name: "my-appointments" });
     }
 
     function clearAppointmentData() {
+        appointmentId.value = "";
         services.value = [];
         date.value = "";
         time.value = "";
@@ -141,8 +174,10 @@ export const useAppointmentsStore = defineStore("appointments", () => {
         date,
         hours,
         time,
+        setSelectedAppointment,
         onServiceSelected,
-        createAppointment,
+        saveAppointment,
+        clearAppointmentData,
         cancelAppointment,
         isServiceSelected,
         noServiceSelected,
