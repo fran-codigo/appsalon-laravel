@@ -18,4 +18,12 @@ export default {
     forgotPassword(data) {
         return api.post(route("forgot.password"), data);
     },
+    verifyPasswordResetToken(token) {
+        return api.get(route("verify.password.reset.token", { token }), {
+            params: { token },
+        });
+    },
+    updatePassword(token, data) {
+        return api.put(route("update.password", { token }), data);
+    },
 };
