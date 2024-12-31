@@ -11,7 +11,7 @@ Route::post('/auth/register', [AuthController::class, 'register'])->name('regist
 Route::get('/auth/verify-account/{token}', [AuthController::class, 'verifyUser'])->name('verify.user');
 Route::post('/auth/login', [AuthController::class, 'login'])->name('login.user');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout.user');
-Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
+Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot.password');
 Route::get('/auth/forgot-password/{token}', [AuthController::class, 'verifyPasswordResetToken'])->name('verify-password-reset-token');
 Route::put('/auth/forgot-password/{token}', [AuthController::class, 'updatePassword'])->name('update.password');
 

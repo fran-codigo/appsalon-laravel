@@ -13,6 +13,9 @@ export default {
         });
     },
     auth() {
-        return api.get(route('user.index'))
+        return api.get(route("user.index"));
+    },
+    forgotPassword(data) {
+        return api.post(route("forgot.password"), data);
     },
 };
