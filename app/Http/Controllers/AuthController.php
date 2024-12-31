@@ -86,4 +86,26 @@ class AuthController extends Controller
             'message' => 'Tu cuenta ha sido verificada'
         ]);
     }
+
+    public function forgotPassword(Request $request)
+    {
+        $email = $request->email;
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'errors' => 'El usuario no existe'
+            ], 400);
+        }
+
+        $user->token = Str::random(32);
+        $user->save();
+
+        Mail::send('mail.EmailForgotPassword', ['token' => $user->token, 'name' => $user->name], function ($message) use ($request) {
+            $message->to($request->email);
+            $message->subject('Recuperar Contraseña');
+        });
+
+        return $user;
+    }
 }
