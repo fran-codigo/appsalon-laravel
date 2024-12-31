@@ -12,7 +12,7 @@ Route::get('/auth/verify-account/{token}', [AuthController::class, 'verifyUser']
 Route::post('/auth/login', [AuthController::class, 'login'])->name('login.user');
 Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum')->name('logout.user');
 Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgot-password');
-Route::get('/auth/verify-password-reset-token', [AuthController::class, ''])->name('verify-password-reset-token');
+Route::get('/auth/forgot-password/{token}', [AuthController::class, 'verifyPasswordResetToken'])->name('verify-password-reset-token');
 
 Route::get('/user', [UserController::class, 'index'])->middleware('auth:sanctum')->name('user.index');
 Route::get('/user/appointments', [UserController::class, 'getAppointments'])->middleware('auth:sanctum')->name('user.appointments');

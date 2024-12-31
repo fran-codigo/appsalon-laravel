@@ -106,6 +106,23 @@ class AuthController extends Controller
             $message->subject('Recuperar Contraseña');
         });
 
-        return $user;
+        return response()->json([
+            "message" => 'Se ha enviado un correo con las acciones a realizar.'
+        ]);
+    }
+
+    public function verifyPasswordResetToken(Request $request)
+    {
+        $user = User::where('token', $request->token)->first();
+
+        if (!$user) {
+            return response()->json([
+                'errors' => 'Token Inválido'
+            ], 400);
+        }
+
+        return response()->json([
+            'message' => 'Token válido'
+        ]);
     }
 }
