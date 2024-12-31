@@ -82,9 +82,9 @@ class AuthController extends Controller
         $user->token = null;
         $user->save();
 
-        return response()->json([
+        return [
             'message' => 'Tu cuenta ha sido verificada'
-        ]);
+        ];
     }
 
     public function forgotPassword(Request $request)
@@ -106,9 +106,9 @@ class AuthController extends Controller
             $message->subject('Recuperar Contraseña');
         });
 
-        return response()->json([
+        return [
             "message" => 'Se ha enviado un correo con las acciones a realizar.'
-        ]);
+        ];
     }
 
     public function verifyPasswordResetToken(Request $request)
@@ -121,8 +121,33 @@ class AuthController extends Controller
             ], 400);
         }
 
-        return response()->json([
+        return [
             'message' => 'Token válido'
+        ];
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = User::where('token', $request->token)->first();
+
+        $request->validate([
+            'password' => 'required|min:8'
+        ], [
+            'password' => 'La contraseña es obligatoria y tiene que tener al menos 8 caracteres'
         ]);
+
+        if (!$user) {
+            return response()->json([
+                'errors' => 'Token Inválido'
+            ], 400);
+        }
+
+        $user->token = '';
+        $user->password = $request->password;
+        $user->save();
+
+        return [
+            'message' => 'La contraseña ha sido modificada correctamente'
+        ];
     }
 }
