@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ServiceController;
@@ -24,3 +25,9 @@ Route::resource('services', ServiceController::class);
 Route::apiResource('appointments', AppointmentController::class)->middleware('auth:sanctum');
 
 Route::get('appointments-date', [AppointmentController::class, 'appointmentsByDate'])->middleware('auth:sanctum')->name('appointments.date');
+
+// Admin
+Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum'], function () {
+
+  Route::get('/', [AdminController::class, 'getAdmin']);
+});
