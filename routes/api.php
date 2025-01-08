@@ -30,4 +30,6 @@ Route::get('appointments-date', [AppointmentController::class, 'appointmentsByDa
 Route::group(['prefix' => 'admin', 'middleware' => 'auth:sanctum'], function () {
 
   Route::get('/', [AdminController::class, 'getAdmin']);
+  Route::get('/appointments', [AdminController::class,'getAppointments']);
+
 });
