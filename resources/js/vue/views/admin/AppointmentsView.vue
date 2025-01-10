@@ -1,5 +1,8 @@
 <script setup>
+import { useAdminStore } from "../../store/admin";
 import AdminAppointment from "../../components/admin/AdminAppointment.vue";
+
+const admin = useAdminStore();
 </script>
 
 <template>
@@ -7,13 +10,18 @@ import AdminAppointment from "../../components/admin/AdminAppointment.vue";
         A continuación podrás administrar tus proximas citas
     </p>
 
-    <p class="text-2xl text-center mt-5">Cargando...</p>
+    <p v-if="admin.loading" class="text-2xl text-center mt-5">Cargando...</p>
 
     <div class="">
-        <p class="text-2xl text-center mt-5">No tienes próximas citas</p>
+        <p v-if="admin.noAppointments" class="text-2xl text-center mt-5">
+            No tienes próximas citas
+        </p>
 
-        <div class="grid grid-cols-1 gap-5 mt-5">
-            <AdminAppointment />
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+            <AdminAppointment
+                v-for="appointment in admin.appointments"
+                :appointment="appointment"
+            />
         </div>
     </div>
 </template>

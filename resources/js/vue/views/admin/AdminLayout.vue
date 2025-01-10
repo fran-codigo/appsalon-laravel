@@ -1,5 +1,8 @@
 <script setup>
+import { useAdminStore } from "../../store/admin";
 import AdminSidebar from "../../components/admin/AdminSidebar.vue";
+
+const admin = useAdminStore();
 </script>
 
 <template>
@@ -16,10 +19,16 @@ import AdminSidebar from "../../components/admin/AdminSidebar.vue";
 
                 <div class="flex flex-col space-y-5">
                     <div class="flex gap-2 items-center">
-                        <p class="text-right">Hola:</p>
+                        <p class="text-right">
+                            Hola:
+                            <span class="font-bold">
+                                {{ admin.getAdminName }}
+                            </span>
+                        </p>
 
                         <button
                             type="button"
+                            @click="admin.logout"
                             class="bg-red-600 hover:bg-red-700 p-2 text-white uppercase text-xs font-extrabold rounded-lg"
                         >
                             Cerrar Sesión

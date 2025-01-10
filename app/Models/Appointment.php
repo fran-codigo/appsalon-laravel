@@ -14,9 +14,15 @@ class Appointment extends Model
 
     protected $casts = ['status_id' => AppointmentStatusEnum::class];
 
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+    
     public function services()
     {
         return $this->belongsToMany(Service::class, 'appointments_services')
             ->select(['services.id', 'services.name', 'services.price']);
     }
+
+
 }
