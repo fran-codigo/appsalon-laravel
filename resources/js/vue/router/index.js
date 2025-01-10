@@ -2,9 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "../views/HomeView.vue";
 import NotFoundView from "../views/NotFoundView.vue";
-import AppointmentsLayout from "../views/appointments/AppointmentsLayout.vue";
 import AdminRoutes from "./admin";
-import { authGuard } from "./guards";
+import { adminGuard, authGuard } from "./guards";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -119,6 +118,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     authGuard(to, from, next);
+});
+
+router.beforeEach((to, from, next) => {
+    adminGuard(to, from, next);
 });
 
 export default router;

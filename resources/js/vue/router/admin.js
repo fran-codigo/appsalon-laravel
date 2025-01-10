@@ -2,6 +2,7 @@ export default {
     path: "/admin",
     name: "admin",
     component: () => import("../views/admin/AdminLayout.vue"),
+    meta: { requiresAdmin: true },  
     children: [
         {
             path: "",

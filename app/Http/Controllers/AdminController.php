@@ -12,6 +12,12 @@ class AdminController extends Controller
     public function getAdmin(Request $request)
     {
         $admin = $request->user();
+        if($admin->role_id !== 2) {
+            return response([
+                'errors' => ['No autorizado']
+            ], 422);
+        }
+
         return $admin;
     }
 
