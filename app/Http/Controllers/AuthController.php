@@ -25,7 +25,7 @@ class AuthController extends Controller
             'token' => $token
         ]);
 
-        Mail::send('mail.emailVerify', ['token' => $token, 'name' => $request->get('name')], function ($message) use ($request) {
+        Mail::send('mail.EmailVerify', ['token' => $token, 'name' => $request->get('name')], function ($message) use ($request) {
             $message->to($request->email);
             $message->subject('Verificacion de email');
         });
