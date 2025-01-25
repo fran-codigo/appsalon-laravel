@@ -7,6 +7,7 @@ import AdminAPI from "../api/AdminAPI";
 export const useAdminStore = defineStore("admin", () => {
     const admin = ref({});
     const appointments = ref([]);
+    const services = ref([]);
     const loading = ref(true);
 
     const router = useRouter();
@@ -28,6 +29,11 @@ export const useAdminStore = defineStore("admin", () => {
         appointments.value = data.data.data;
     }
 
+    async function getServices() {
+        const { data } = await AdminAPI.getServices();
+        services.value = data.data;
+    }
+
     function logout() {
         localStorage.removeItem("AUTH_TOKEN");
         admin.value = {};
@@ -44,8 +50,10 @@ export const useAdminStore = defineStore("admin", () => {
         admin,
         loading,
         appointments,
+        services,
         logout,
         getAdminName,
-        noAppointments
+        getServices,
+        noAppointments,
     };
 });

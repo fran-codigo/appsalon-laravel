@@ -14,7 +14,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return new ServiceResource(Service::all());
+        return ServiceResource::collection(Service::all()->where('available', '=', 1));
     }
 
     /**

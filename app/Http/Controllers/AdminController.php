@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AppointmentStatusEnum;
+use App\Http\Resources\ServiceResource;
 use App\Models\Appointment;
+use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -33,5 +35,21 @@ class AdminController extends Controller
         return [
             "data" => $appointments
         ];
+    }
+
+    public function getServices()
+    {
+        try {
+            $services = Service::paginate(10);
+            return ServiceResource::collection($services);
+        } catch (\Exception $e) {
+            $message = env('APP_ENV') === 'local'
+                ? $e->getMessage()
+                : 'Ocurrió un error al obtener los servicios. Por favor, inténtelo de nuevo más tarde.';
+
+            return response()->json([
+                'message' => $message
+            ], 500);
+        }
     }
 }

@@ -14,12 +14,11 @@ class ServiceResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $data = parent::toArray($request);
-
-        $data = collect($data)->filter(function ($item) {
-            return $item['available'] == 1;
-        })->toArray();
-
-        return $data;
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'price' => $this->price,
+            'available' => $this->available,
+        ];
     }
 }

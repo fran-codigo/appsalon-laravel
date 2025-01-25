@@ -1,17 +1,19 @@
 <script setup>
 import { onMounted } from "vue";
-import { useServicesStore } from "../../store/service";
+import { useAdminStore } from "../../store/admin";
 import AdminServiceTable from "../../components/admin/AdminServiceTable.vue";
 
-const service = useServicesStore();
+const admin = useAdminStore();
 
 onMounted(async () => {
-    await service.getServices();
+    await admin.getServices();
 });
 </script>
 
 <template>
     <p class="text-lg mt-5">A continuación podrás administrar tus servicios</p>
 
-    <AdminServiceTable :services="service.services" />
+    
+    
+    <AdminServiceTable :services="admin.services" />
 </template>
