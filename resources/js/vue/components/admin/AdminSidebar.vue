@@ -30,8 +30,8 @@ const route = useRoute();
                     Citas
                 </RouterLink>
 
-                <!-- <RouterLink
-                :to="{ name: 'view-services' }"
+                <RouterLink
+                :to="{ name: 'admin-services' }"
                 class="font-bold text-lg border-t border-blue-200 p-3 last-of-type:border-b"
                 :class="
                 route.path.includes('servicios')
@@ -40,7 +40,7 @@ const route = useRoute();
                 "
                 >
                 Servicios
-              </RouterLink> -->
+              </RouterLink>
             </nav>
         </div>
     </div>
