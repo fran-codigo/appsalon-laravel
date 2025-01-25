@@ -12,7 +12,14 @@ export default {
         {
             path: "servicios",
             name: "admin-services",
-            component: () => import("../views/admin/ServicesView.vue"),
+            component: () => import("../views/admin/AdminServicesLayout.vue"),
+            children: [
+                {
+                    path: "",
+                    name: "admin-services-list",
+                    component: () => import("../views/admin/ServicesView.vue"),
+                },
+            ],
         },
     ],
 };
