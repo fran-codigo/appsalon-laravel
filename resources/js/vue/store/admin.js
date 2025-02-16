@@ -1,4 +1,4 @@
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, inject } from "vue";
 import { useRouter } from "vue-router";
 import { defineStore } from "pinia";
 import AuthAPI from "../api/AuthAPI";
@@ -13,6 +13,7 @@ export const useAdminStore = defineStore("admin", () => {
     const totalPages = ref(1);
     const totalServices = ref(0);
 
+    const toast = inject("toast");
     const router = useRouter();
 
     onMounted(async () => {
@@ -52,6 +53,23 @@ export const useAdminStore = defineStore("admin", () => {
         }
     }
 
+    async function saveService(service) {
+        try {
+            const { data } = await AdminAPI.saveService(service);
+            await getServices();
+            toast.open({
+                type: "success",
+                message: data.message,
+            });
+            router.push({ name: "admin-services-list" });
+        } catch (error) {
+            toast.open({
+                message: Object.values(error.response.data.errors),
+                type: "error",
+            });
+        }
+    }
+
     function logout() {
         localStorage.removeItem("AUTH_TOKEN");
         admin.value = {};
@@ -72,6 +90,7 @@ export const useAdminStore = defineStore("admin", () => {
         currentPage,
         totalPages,
         totalServices,
+        saveService,
         logout,
         prevServices,
         nextServices,

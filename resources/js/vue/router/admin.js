@@ -19,6 +19,11 @@ export default {
                     name: "admin-services-list",
                     component: () => import("../views/admin/ServicesView.vue"),
                 },
+                {
+                    path: "crear",
+                    name: "admin-services-create",
+                    component: () => import("../views/admin/ServiceCreateView.vue"),
+                }
             ],
         },
     ],
