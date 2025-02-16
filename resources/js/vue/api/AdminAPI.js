@@ -7,7 +7,11 @@ export default {
     getAppointments() {
         return api.get(route("admin.appointments"));
     },
-    getServices() {
-        return api.get(route("admin.services"));
+    getServices(page) {
+        return api.get(route("admin.services"), {
+            params: {
+                page,
+            },
+        });
     },
 };
