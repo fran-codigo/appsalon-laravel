@@ -21,6 +21,7 @@ Route::get('/user/appointments', [UserController::class, 'getAppointments'])->mi
 
 
 Route::resource('services', ServiceController::class);
+Route::put('services/{id}/update-availability', [ServiceController::class, 'updateAvailability'])->name('services.update-availability');
 
 Route::apiResource('appointments', AppointmentController::class)->middleware('auth:sanctum');
 

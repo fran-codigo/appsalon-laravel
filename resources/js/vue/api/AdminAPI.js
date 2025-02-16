@@ -17,4 +17,7 @@ export default {
     saveService(service) {
         return api.post(route("services.store"), service);
     },
+    updateAvailabilityService(id) {
+        return api.put(route("services.update-availability", id));
+    },
 };

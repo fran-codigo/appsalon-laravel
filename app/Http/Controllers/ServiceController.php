@@ -75,6 +75,25 @@ class ServiceController extends Controller
         ];
     }
 
+    public function updateAvailability(Request $request, string $id)
+    {
+        $service = Service::find($id);
+
+        if (!$service) {
+            return response([
+                'errors' => ['El servicio no existe']
+            ], 404);
+        }
+
+        $service->available = !$service->available;
+        $service->save();
+
+        return [
+            'message' => 'El servicio se ha actualizado correctamente',
+            'data' => $service
+        ];
+    }
+
     /**
      * Remove the specified resource from storage.
      */

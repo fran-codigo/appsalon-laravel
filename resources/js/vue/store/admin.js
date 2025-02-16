@@ -70,6 +70,24 @@ export const useAdminStore = defineStore("admin", () => {
         }
     }
 
+    async function updateAvailabilityService(id) {
+        try {
+            const { data } = await AdminAPI.updateAvailabilityService(id);
+            await getServices();
+            toast.open({
+                type: "success",
+                message: data.message,
+            });
+        } catch (error) {
+            console.log(error);
+            
+            // toast.open({
+            //     message: Object.values(error.response.data.errors),
+            //     type: "error",
+            // });
+        }
+    }
+
     function logout() {
         localStorage.removeItem("AUTH_TOKEN");
         admin.value = {};
@@ -91,6 +109,7 @@ export const useAdminStore = defineStore("admin", () => {
         totalPages,
         totalServices,
         saveService,
+        updateAvailabilityService,
         logout,
         prevServices,
         nextServices,
