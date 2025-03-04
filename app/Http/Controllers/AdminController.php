@@ -39,7 +39,9 @@ class AdminController extends Controller
 
     public function getServices()
     {
-        $services = Service::orderBy('created_at', 'desc')->paginate(10);
+        $services = Service::orderBy('available', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         return ServiceResource::collection($services);
     }
 }
