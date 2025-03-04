@@ -23,6 +23,11 @@ export default {
                     path: "crear",
                     name: "admin-services-create",
                     component: () => import("../views/admin/ServiceCreateView.vue"),
+                },
+                {
+                    path: ":id/editar",
+                    name: "admin-services-edit",
+                    component: () => import("../views/admin/ServiceEditView.vue"),
                 }
             ],
         },

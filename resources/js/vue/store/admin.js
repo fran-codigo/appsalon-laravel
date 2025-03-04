@@ -80,11 +80,25 @@ export const useAdminStore = defineStore("admin", () => {
             });
         } catch (error) {
             console.log(error);
-            
-            // toast.open({
-            //     message: Object.values(error.response.data.errors),
-            //     type: "error",
-            // });
+        }
+    }
+
+    async function updateService(id, formData) {
+        try {
+            await AdminAPI.updateService(id, formData);
+            toast.open({
+                type: "success",
+                message: "El servicio ha sido actualizado correctamente",
+            });
+            await getServices();
+            router.push({ name: "admin-services-list" });
+        } catch (error) {
+            console.log(error);
+
+            toast.open({
+                message: error.response.data.errors,
+                type: "error",
+            });
         }
     }
 
@@ -110,6 +124,7 @@ export const useAdminStore = defineStore("admin", () => {
         totalServices,
         saveService,
         updateAvailabilityService,
+        updateService,
         logout,
         prevServices,
         nextServices,

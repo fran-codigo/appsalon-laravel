@@ -1,4 +1,5 @@
 <script setup>
+import { RouterLink } from "vue-router";
 import { useAdminStore } from "../../store/admin";
 import { formatCurrency } from "../../utils";
 
@@ -63,10 +64,11 @@ defineProps({
                                 </td>
                                 <td
                                     class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                                    Editar
+                                    <RouterLink :to="{ name: 'admin-services-edit', params: { id: service.id } }"
+                                        class="text-indigo-600 hover:text-indigo-900">Editar</RouterLink>
                                     <span class="sr-only">{{
                                         service.name
-                                        }}</span>
+                                    }}</span>
                                 </td>
                             </tr>
                         </tbody>

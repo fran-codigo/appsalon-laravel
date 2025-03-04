@@ -20,4 +20,10 @@ export default {
     updateAvailabilityService(id) {
         return api.put(route("services.update-availability", id));
     },
+    getService(id) {
+        return api.get(route("services.show", id));
+    },
+    updateService(id,service) {
+        return api.put(route("services.update", id), service);
+    }
 };
