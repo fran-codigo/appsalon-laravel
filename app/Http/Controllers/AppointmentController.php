@@ -106,7 +106,7 @@ class AppointmentController extends Controller
             ], 403);
         }
 
-        $appointment->date = $request->date;
+        $appointment->date = Carbon::parse($request->date)->toDateString();
         $appointment->time = $request->time;
         $appointment->total = $request->total;
         $appointment->save();
