@@ -26,7 +26,7 @@ class AppointmentController extends Controller
     {
         $appointment = new Appointment();
         $appointment->user_id = Auth::user()->id;
-        $appointment->date = $request->date;
+        $appointment->date = Carbon::parse($request->date)->toDateString();
         $appointment->time = $request->time;
         $appointment->total = $request->total;
         $appointment->state_id = AppointmentStatusEnum::ACTIVE;
